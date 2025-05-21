@@ -1,0 +1,78 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ crop.name }}</h1>
+<div class="card">
+    <h2>Crop Details</h2>
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-value">{{ crop.crop_type }}</div>
+            <div class="stat-label">Crop Type</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ crop.area }} ha</div>
+            <div class="stat-label">Area</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ crop.planting_date }}</div>
+            <div class="stat-label">Planting Date</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ crop.location }}</div>
+            <div class="stat-label">Location</div>
+        </div>
+    </div>
+</div>
+
+<h2>Sensor Readings</h2>
+{% if sensor_data %}
+    <div class="grid">
+        {% for data in sensor_data %}
+            <div class="card">
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-value">{{ data.temperature }}°C</div>
+                        <div class="stat-label">Temperature</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">{{ data.humidity }}%</div>
+                        <div class="stat-label">Humidity</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">{{ data.soil_moisture }}%</div>
+                        <div class="stat-label">Soil Moisture</div>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 1rem; color: #666;">
+                    {{ data.timestamp }}
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card">
+        <p>No sensor data available.</p>
+    </div>
+{% endif %}
+
+{% if weather_data %}
+    <h2>Current Weather</h2>
+    <div class="card">
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value">{{ weather_data.main.temp }}°C</div>
+                <div class="stat-label">Temperature</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ weather_data.main.humidity }}%</div>
+                <div class="stat-label">Humidity</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ weather_data.weather.0.description|title }}</div>
+                <div class="stat-label">Conditions</div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
