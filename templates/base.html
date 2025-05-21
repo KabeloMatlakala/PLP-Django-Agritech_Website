@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Crop Monitoring System</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=2">
+    <link rel="stylesheet" href="{% static 'css/feature-page.css' %}?v=2">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">    >
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    {% if messages %}
+        <div id="toast-container">
+            {% for message in messages %}
+                <div class="toast {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        <script>
+            const toasts = document.querySelectorAll('.toast');
+            toasts.forEach(toast => {
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            });
+        </script>
+    {% endif %}
+
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1><a href="{% url 'homepage' %}#home" class="active"> Agri<span>Tech</span> </a></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'homepage' %}#home" class="active">Home</a></li>
+                    <li><a href="{% url 'homepage' %}#crop-monitoring">Crop Monitoring</a></li>
+                    <li><a href="{% url 'homepage' %}#livestock">Livestock Management</a></li>
+                    <li><a href="{% url 'homepage' %}#marketplace">Marketplace</a></li>
+                    <li><a href="{% url 'homepage' %}#contact">Contact</a></li>
+
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'account_dashboard' %}" class="nav-btn">Dashboard</a></li>
+                    <li><span class="nav-user">Hi, {{ user.get_full_name|default:user.username }}</span></li>
+                    <li><a href="{% url 'logout' %}" class="nav-btn">Logout</a></li>
+                    {% else %}
+                    <li><a href="{% url 'signin' %}" class="nav-btn">Login</a></li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>Agri<span>Tech</span></h3>
+                    <p>Revolutionizing agriculture through innovative technology solutions for farmers worldwide.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#crop-monitoring">Crop Monitoring</a></li>
+                        <li><a href="#livestock">Livestock Management</a></li>
+                        <li><a href="#marketplace">Marketplace</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Solutions</h4>
+                    <ul>
+                        <li><a href="#">Weather Forecasting</a></li>
+                        <li><a href="#">Soil Analysis</a></li>
+                        <li><a href="#">Pest Detection</a></li>
+                        <li><a href="#">Yield Prediction</a></li>
+                        <li><a href="#">RFID Tagging</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h4>Newsletter</h4>
+                    <p>Subscribe to our newsletter for the latest updates and insights.</p>
+                    <form>
+                        <input type="email" placeholder="Your Email">
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 AgriTech Solutions. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
